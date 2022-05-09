@@ -16,35 +16,35 @@ uvicorn main:app --reload
 
 You should then be able to send `curl` commands or run the `test_api.ipynb` notebook in the `notebooks` directory (you'll `jupyter` installed for that)
 
-
-
 ## Functionality
 
-The app exposes some REST endpoints that fetch address and transaction data. The data is queried from blockchain.com using their REST API, transformed and returnned to user. 
+The app exposes some REST endpoints that fetch address and transaction data. The data is queried from blockchain.com using their REST API, transformed and returnned to user.
 
 There is also the ability to create a user record and add an address to that user (although these pieces might be broken atm)
 
+### Endpoints
+
+- `GET /api/:address`
+- `GET /api/:address/txs`
+- `GET /api/:address/balance`
+
 ## Areas of improvement
-- Addition of unit tests via happy path jsons 
+
+- Addition of unit tests via happy path jsons
 - Completion of database layer
 - Aggregate queries
-    - total balance across addresses etc..
+  - total balance across addresses etc..
 - Syncing mechanism via cron tasks
-
 
 ```python
 import requests
 ```
-
 
 ```python
 # Get address info
 r = requests.get("http://localhost:8000/api/3E8ociqZa9mZUSwGdSmAEMAoAxBK3FNDcd",)
 r.json()
 ```
-
-
-
 
     {'address': '3E8ociqZa9mZUSwGdSmAEMAoAxBK3FNDcd',
      'n_tx': 1138,
@@ -82,18 +82,12 @@ r.json()
      'total_sent': 1337337787,
      'final_balance': 4144229}
 
-
-
-
 ```python
-# Get transactions from address 
+# Get transactions from address
 
 r = requests.get("http://localhost:8000/api/3E8ociqZa9mZUSwGdSmAEMAoAxBK3FNDcd/txs",)
 r.json()
 ```
-
-
-
 
     [{'hash': '4244d2755fda93be58174a5642c128d9c6d6924c3afa7b8653d3c796eac6e0f0',
       'block_height': 735248,
@@ -126,19 +120,11 @@ r.json()
       'block_height': 734360,
       'tx_index': 2296999950173941}]
 
-
-
-
 ```python
-# Get balance from address 
+# Get balance from address
 r = requests.get("http://localhost:8000/api/3E8ociqZa9mZUSwGdSmAEMAoAxBK3FNDcd/balance",)
 r.json()['final_balance']
 
 ```
 
-
-
-
     4144229
-
-
